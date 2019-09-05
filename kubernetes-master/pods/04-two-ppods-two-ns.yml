@@ -1,0 +1,53 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: app1
+
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: app2
+
+--- 
+kind: Pod
+apiVersion: v1
+metadata:
+  name: httpd
+  namespace: app1
+  labels:
+    name: httpd
+spec:
+  containers:
+  - name: httpd
+    image: httpd
+    ports:
+      - containerPort: 80 
+
+--- 
+kind: Pod
+apiVersion: v1
+metadata:
+  name: centos
+  namespace: app2
+  labels:
+    name: centos
+spec:
+  containers:
+  - name: centos
+    image: centos
+    command: ["sleep", "5000"]
+
+--- 
+kind: Service
+apiVersion: v1
+metadata:
+  name: httpd-svc
+  namespace: app1
+spec:
+  selector:
+    name: httpd
+  ports:
+  - port: 80
+    targetPort: 80

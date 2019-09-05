@@ -1,0 +1,40 @@
+---
+kind: Pod
+apiVersion: v1
+metadata: 
+  name: student-app
+  labels:
+    app: student-app 
+spec:
+  containers:
+    - name: student-api
+      image: raghudevops32/studentapp:v5
+      env:
+        - name: DBUSERNAME
+          valueFrom:
+            secretKeyRef:
+              name: db-pass
+              key: DBUSERNAME
+        - name: DBPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-pass
+              key: DBPASSWORD
+        - name: DBSERVER
+          valueFrom:
+            secretKeyRef:
+              name: db-pass
+              key: DBSERVER
+
+--- 
+kind: Service
+apiVersion: v1
+metadata:
+  name: student-app
+spec:
+  selector:
+    app: student-app 
+  ports:
+  - name: api
+    port: 80
+    targetPort: 8080

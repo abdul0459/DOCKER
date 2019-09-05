@@ -1,0 +1,35 @@
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod1
+  labels:
+    name: pod1
+spec:
+  containers:
+  - name: httpd
+    image: httpd
+    ports:
+      - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: pod1-svc
+spec:
+  selector:
+    name: pod1
+  ports:
+  - port: 80
+    targetPort: 80
+
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod2
+spec:
+  containers:
+  - name: centos  
+    image: centos
+    command: ["sleep", "1000"]

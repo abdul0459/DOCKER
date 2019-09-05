@@ -1,0 +1,14 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod05
+spec:
+  containers:
+  - name: centos
+    image: centos
+    command: ["sleep", "10000"]
+    env:
+      - name: MYNAME
+        value: Raghu
+      - name: COURSE 
+        value: DevOps

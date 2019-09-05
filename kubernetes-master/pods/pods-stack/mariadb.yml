@@ -1,0 +1,43 @@
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: mariadb
+  labels:
+    name: mariadb
+spec:
+  containers:
+  - name: mariadb
+    image: raghudevops32/mariadb:v3
+    ports:
+      - containerPort: 3306
+    env:
+      - name: MYSQL_ROOT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: db-pass
+            key: DBPASSWORD 
+    volumeMounts:
+    - mountPath: /var/lib/mysql
+      name: mariadb-volume
+  volumes:
+  - name: mariadb-volume
+    #awsElasticBlockStore:
+    #  volumeID: vol-00986aa6e13e5217a 
+    gcePersistentDisk:
+      pdName: db-disk
+      fsType: ext4
+  nodeSelector:
+    diskType: persistent
+--- 
+kind: Service
+apiVersion: v1
+metadata:
+  name: mariadb
+spec:
+  selector:
+    name: mariadb
+  ports:
+  - name: db
+    port: 3306
+    targetPort: 3306

@@ -1,0 +1,13 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: multi-container
+spec:
+  containers:
+  - name: httpd
+    image: httpd
+    ports:
+      - containerPort: 80
+  - name: centos
+    image: centos
+    command: ["sleep", "1000"]

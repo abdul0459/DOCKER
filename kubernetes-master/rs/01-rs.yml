@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: web-server-rs
+  labels:
+    app: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        image: raghudevops32/httpd:v6
+        ports:
+        - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: web-server-svc
+spec:
+  selector:
+    app: web
+  ports:
+  - port: 80
+    targetPort: 80

@@ -1,0 +1,9 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: check 
+spec:
+  containers:
+    - name: webserver
+      image: centos
+      command: ["sleep", "1000"]

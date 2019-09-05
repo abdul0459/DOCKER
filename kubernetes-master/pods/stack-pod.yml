@@ -1,0 +1,43 @@
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: stack2
+  labels:
+    name: stack
+spec:
+  containers:
+  - name: mariadb
+    image: mariadb
+    ports:
+      - containerPort: 3306
+    env: 
+     - name: MYSQL_ROOT_PASSWORD
+       value: root
+
+  - name: tomcat
+    image: raghudevops32/studentapp:v2
+    ports:
+      - containerPort: 8080
+    env:
+      - name: MARIADB_SERVER
+        value: "${STACK_SERVICE_HOST}"
+
+
+--- 
+kind: Service
+apiVersion: v1
+metadata:
+  name: stack
+spec:
+  #type: LoadBalancer
+  selector:
+    name: stack
+  ports:
+  - name: app
+    port: 80  
+    targetPort: 8080
+  - name: db
+    port: 3306
+    targetPort: 3306
+

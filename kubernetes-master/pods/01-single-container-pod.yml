@@ -1,0 +1,10 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: single-container
+spec:
+  containers:
+    - name: webserver
+      image: httpd
+      ports:
+        - containerPort: 80

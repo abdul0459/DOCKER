@@ -1,0 +1,25 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: studentapp
+  labels:
+    name: student
+spec:
+  containers:
+  - name: studentapp
+    image: raghudevops32/studentapp:v2
+    ports:
+      - containerPort: 8080
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: studentapp
+spec:
+  selector:
+    name: student
+  ports:
+  - port: 80
+    targetPort: 8080
+
